@@ -14,6 +14,9 @@
 	Grid* grid;
 	NSArray* curveTypes;
 	CAMediaTimingFunction* timingFunction;
+	NSImageView* demoImage;
+	CGFloat demoAnimationStartX;
+	CGFloat demoAnimationEndX;
 	
 	IBOutlet NSPopUpButton* curveTypeDropDown;
 	IBOutlet NSTextField* cp1X;
@@ -24,8 +27,12 @@
 
 -(IBAction)updateTimingFunction:(id)sender;
 -(IBAction)updateControlPoints:(id)sender;
+-(IBAction)doAnimationDemo:(id)sender;
+
+-(void)updateControlPointFromGridAtIndex:(unsigned int)index;
 
 @property (assign) IBOutlet Grid* grid;
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSImageView *demoImage;
 
 @end

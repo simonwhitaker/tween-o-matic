@@ -10,6 +10,6 @@
 
 @protocol GridDelegate
 
--(void)gridDidUpdate;
+-(void)controlPointWasDraggedAtIndex:(unsigned int)index;
 
 @end

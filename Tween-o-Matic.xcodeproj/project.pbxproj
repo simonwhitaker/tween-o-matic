@@ -12,8 +12,11 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		F4394A1411608A1F00930F4D /* lorry.png in Resources */ = {isa = PBXBuildFile; fileRef = F4394A1311608A1F00930F4D /* lorry.png */; };
 		F450D34C115D4B8E0033A32E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F450D34B115D4B8E0033A32E /* QuartzCore.framework */; };
+		F457AE76116130FC00CB5E72 /* README in Resources */ = {isa = PBXBuildFile; fileRef = F457AE75116130FC00CB5E72 /* README */; };
 		F4795C58115BFBCD008CB8CC /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = F4795C57115BFBCD008CB8CC /* Grid.m */; };
+		F4EC1593115FC6BA00300DCB /* UNLICENSE in Resources */ = {isa = PBXBuildFile; fileRef = F4EC1592115FC6BA00300DCB /* UNLICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +32,13 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Tween_o_Matic-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tween_o_Matic-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Tween-o-Matic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tween-o-Matic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4394A1311608A1F00930F4D /* lorry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lorry.png; sourceTree = "<group>"; };
 		F450D2E3115D403E0033A32E /* GridDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridDelegate.h; sourceTree = "<group>"; };
 		F450D34B115D4B8E0033A32E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F457AE75116130FC00CB5E72 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		F4795C56115BFBCD008CB8CC /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		F4795C57115BFBCD008CB8CC /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid.m; sourceTree = "<group>"; };
+		F4EC1592115FC6BA00300DCB /* UNLICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UNLICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,9 +116,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4394A1311608A1F00930F4D /* lorry.png */,
 				8D1107310486CEB800E47090 /* Tween_o_Matic-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				F457AE75116130FC00CB5E72 /* README */,
+				F4EC1592115FC6BA00300DCB /* UNLICENSE */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -172,6 +181,9 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				F4EC1593115FC6BA00300DCB /* UNLICENSE in Resources */,
+				F4394A1411608A1F00930F4D /* lorry.png in Resources */,
+				F457AE76116130FC00CB5E72 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

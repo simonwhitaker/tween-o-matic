@@ -154,8 +154,6 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
 	[[NSColor blueColor] set];
 	[line stroke];
 	
-	if (delegate && [delegate respondsToSelector:@selector(gridDidUpdate)])
-		[delegate gridDidUpdate];
 }
 
 #pragma mark -
@@ -210,10 +208,16 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
 		else if (location.y > [self frame].size.height - border - 1)
 			location.y = [self frame].size.height - border - 1;
 		
-		if (activeDragHandle == CP_1)
+		if (activeDragHandle == CP_1) {
 			cp1 = location;
-		else
+		}
+		else {
 			cp2 = location;
+		}
+		
+		if (delegate && [delegate respondsToSelector:@selector(controlPointWasDraggedAtIndex:)])
+			[delegate controlPointWasDraggedAtIndex:activeDragHandle];
+
 		[self setNeedsDisplay:YES];
 	}
 }

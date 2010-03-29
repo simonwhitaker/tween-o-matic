@@ -19,7 +19,7 @@ enum draghandle {
 	float border;
 	NSPoint cp1;
 	NSPoint cp2;
-	int activeDragHandle;
+	unsigned int activeDragHandle;
 	id delegate;
 }
 

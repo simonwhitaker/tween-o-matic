@@ -11,9 +11,9 @@
 
 @synthesize window;
 @synthesize grid;
+@synthesize demoImage;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
 	self.grid.cp1 = NSMakePoint(0.0, 0.3);
 	self.grid.cp2 = NSMakePoint(0.8, 1.0);
 	self.grid.delegate = self;
@@ -30,50 +30,89 @@
 	
 	[curveTypeDropDown removeAllItems];
 	[curveTypeDropDown addItemsWithTitles:curveTypes];
+	
+	[self updateControlPointFromGridAtIndex:CP_1];
+	[self updateControlPointFromGridAtIndex:CP_2];
+	
 	[self updateTimingFunction:nil];
+	
+	
+	demoAnimationStartX = 17.0f;
+	demoAnimationEndX   = 250.0f;
 }
+
+-(IBAction)doAnimationDemo:(id)sender {
+	CALayer* demoLayer = demoImage.layer;
+		
+	double duration = 1.0;
+	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+	animation.removedOnCompletion = NO;
+	
+	CGMutablePathRef path = CGPathCreateMutable();
+	CGFloat y = demoLayer.position.y;
+	CGPathMoveToPoint(path, NULL, demoAnimationStartX, y);
+	CGPathAddLineToPoint(path, NULL, demoAnimationEndX, y);
+	
+	animation.path = path;
+	animation.duration = duration;
+	CGPathRelease(path);
+	
+	CAAnimationGroup *group = [CAAnimationGroup animation];
+	group.delegate = self;
+	group.duration = duration;
+	group.timingFunction = timingFunction;
+	group.animations = [NSArray arrayWithObjects:animation, nil];
+	
+	[demoLayer addAnimation:group forKey:@"doAnimationDemo"];
+	
+	demoLayer.position = CGPointMake(demoAnimationEndX, y);
+}
+
 
 -(void)windowDidResize:(NSNotification*)notification {
 	[self updateTimingFunction:nil];
 }
 
--(void)updateTimingFunction:(id)sender {
+-(IBAction)updateTimingFunction:(id)sender {
 	int curveTypeIndex = [curveTypeDropDown indexOfSelectedItem];
 	if (curveTypeIndex <= 4) {
 		timingFunction = [CAMediaTimingFunction functionWithName:(NSString*)[curveTypes objectAtIndex:curveTypeIndex]];
-		[cp1X setEnabled:NO];
-		[cp1Y setEnabled:NO];
-		[cp2X setEnabled:NO];
-		[cp2Y setEnabled:NO];
+		float coords[2];
+		[timingFunction getControlPointAtIndex:1 values:coords];
+		self.grid.cp1 = NSMakePoint(coords[0], coords[1]);
+		
+		[timingFunction getControlPointAtIndex:2 values:coords];
+		self.grid.cp2 = NSMakePoint(coords[0], coords[1]);
 	} else {
 		timingFunction = [CAMediaTimingFunction functionWithControlPoints:self.grid.cp1.x
 																		 :self.grid.cp1.y
 																		 :self.grid.cp2.x
 																		 :self.grid.cp2.y];
-		[cp1X setEnabled:YES];
-		[cp1Y setEnabled:YES];
-		[cp2X setEnabled:YES];
-		[cp2Y setEnabled:YES];
 	}
-	
-	float coords[2];
-	[timingFunction getControlPointAtIndex:1 values:coords];
-	self.grid.cp1 = NSMakePoint(coords[0], coords[1]);
-
-	[timingFunction getControlPointAtIndex:2 values:coords];
-	self.grid.cp2 = NSMakePoint(coords[0], coords[1]);
+	[self doAnimationDemo:nil];
 }
 
 -(IBAction)updateControlPoints:(id)sender {
+	[curveTypeDropDown selectItemAtIndex:5]; // set drop-down to "custom"
 	grid.cp1 = NSMakePoint([cp1X floatValue], [cp1Y floatValue]);
 	grid.cp2 = NSMakePoint([cp2X floatValue], [cp2Y floatValue]);
+	[self updateTimingFunction:nil];
 }
 
--(void)gridDidUpdate {
-	[cp1X setFloatValue:self.grid.cp1.x];
-	[cp1Y setFloatValue:self.grid.cp1.y];
-	[cp2X setFloatValue:self.grid.cp2.x];
-	[cp2Y setFloatValue:self.grid.cp2.y];
+-(void)controlPointWasDraggedAtIndex:(unsigned int)index {
+	[curveTypeDropDown selectItemAtIndex:5]; // set drop-down to "custom"
+	[self updateControlPointFromGridAtIndex:index];
+	[self updateTimingFunction:nil];
+}
+	
+-(void)updateControlPointFromGridAtIndex:(unsigned int)index {
+	if (index == CP_1) {
+		[cp1X setFloatValue:self.grid.cp1.x];
+		[cp1Y setFloatValue:self.grid.cp1.y];
+	} else {
+		[cp2X setFloatValue:self.grid.cp2.x];
+		[cp2Y setFloatValue:self.grid.cp2.y];
+	}
 }
 
 @end
