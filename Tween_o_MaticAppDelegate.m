@@ -31,10 +31,10 @@
 	[curveTypeDropDown removeAllItems];
 	[curveTypeDropDown addItemsWithTitles:curveTypes];
 	
+	[self updateTimingFunction:nil];
+	
 	[self updateControlPointFromGridAtIndex:CP_1];
 	[self updateControlPointFromGridAtIndex:CP_2];
-	
-	[self updateTimingFunction:nil];
 	
 	
 	demoAnimationStartX = 17.0f;
