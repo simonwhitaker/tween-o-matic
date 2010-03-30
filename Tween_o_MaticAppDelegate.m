@@ -6,6 +6,7 @@
 //
 
 #import "Tween_o_MaticAppDelegate.h"
+#import "TimingFunction.h"
 
 @implementation Tween_o_MaticAppDelegate
 
@@ -19,17 +20,19 @@
 	self.grid.delegate = self;
 	
 	curveTypes = [[NSArray arrayWithObjects:
-				  kCAMediaTimingFunctionDefault,
-				  kCAMediaTimingFunctionEaseIn,
-				  kCAMediaTimingFunctionEaseOut,
-				  kCAMediaTimingFunctionEaseInEaseOut,
-				  kCAMediaTimingFunctionLinear,
-				  @"custom",
-				  nil
-				  ] retain];
+	   [[[TimingFunction alloc] initWithFunction:kCAMediaTimingFunctionDefault constantName:@"kCAMediaTimingFunctionDefault" andDescription:@"Default"] autorelease],
+	   [[[TimingFunction alloc] initWithFunction:kCAMediaTimingFunctionEaseIn constantName:@"kCAMediaTimingFunctionEaseIn" andDescription:@"Ease In"] autorelease],
+	   [[[TimingFunction alloc] initWithFunction:kCAMediaTimingFunctionEaseOut constantName:@"kCAMediaTimingFunctionEaseOut" andDescription:@"Ease Out"] autorelease],
+	   [[[TimingFunction alloc] initWithFunction:kCAMediaTimingFunctionEaseInEaseOut constantName:@"kCAMediaTimingFunctionEaseInEaseOut" andDescription:@"Ease In, Ease Out"] autorelease],
+	   [[[TimingFunction alloc] initWithFunction:kCAMediaTimingFunctionLinear constantName:@"kCAMediaTimingFunctionLinear" andDescription:@"Linear"] autorelease],
+	   [[[TimingFunction alloc] initWithFunction:nil constantName:nil andDescription:@"Custom"] autorelease],
+	  nil
+	] retain];
 	
 	[curveTypeDropDown removeAllItems];
-	[curveTypeDropDown addItemsWithTitles:curveTypes];
+	for (TimingFunction* tf in curveTypes) {
+		[curveTypeDropDown addItemWithTitle:tf.description];
+	}
 	
 	[self updateTimingFunction:nil];
 	
@@ -76,18 +79,28 @@
 -(IBAction)updateTimingFunction:(id)sender {
 	int curveTypeIndex = [curveTypeDropDown indexOfSelectedItem];
 	if (curveTypeIndex <= 4) {
-		timingFunction = [CAMediaTimingFunction functionWithName:(NSString*)[curveTypes objectAtIndex:curveTypeIndex]];
+		TimingFunction* tf = (TimingFunction*)[curveTypes objectAtIndex:curveTypeIndex];
+
+		timingFunction = [CAMediaTimingFunction functionWithName:tf.function];
+		
+		// Update the grid with the appropriate control point coordinates
 		float coords[2];
 		[timingFunction getControlPointAtIndex:1 values:coords];
 		self.grid.cp1 = NSMakePoint(coords[0], coords[1]);
 		
 		[timingFunction getControlPointAtIndex:2 values:coords];
 		self.grid.cp2 = NSMakePoint(coords[0], coords[1]);
+		
+		// update the constructor field
+		[constructor setStringValue:[NSString stringWithFormat:@"[CAMediaTimingFunction functionWithName:%@]", tf.constantName]];
+		
 	} else {
 		timingFunction = [CAMediaTimingFunction functionWithControlPoints:self.grid.cp1.x
 																		 :self.grid.cp1.y
 																		 :self.grid.cp2.x
 																		 :self.grid.cp2.y];
+		// update the constructor field
+		[constructor setStringValue:[NSString stringWithFormat:@"[CAMediaTimingFunction functionWithControlPoints:%.2f :%.2f :%.2f :%.2f]", self.grid.cp1.x, self.grid.cp1.y, self.grid.cp2.x, self.grid.cp2.y]];
 	}
 	[self doAnimationDemo:nil];
 }

@@ -89,13 +89,12 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
 - (void)drawRect:(NSRect)dirtyRect {
 	[[NSColor whiteColor] set];
 	[NSBezierPath fillRect:dirtyRect];
-	[[NSColor blackColor] set];
-	[NSBezierPath strokeRect:dirtyRect];
+	
+//	[[NSColor blackColor] set];
+//	[NSBezierPath strokeRect:dirtyRect];
 	
 	NSRect rect = [self frame];
-	
-	//[self setBounds:NSMakeRect(0 - border, 0 - border, rect.size.width + border * 2, rect.size.height + border * 2)];
-	
+		
 	float w = rect.size.width - border * 2;
 	float h = rect.size.height - border * 2;
 	

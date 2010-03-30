@@ -23,6 +23,7 @@
 	IBOutlet NSTextField* cp1Y;
 	IBOutlet NSTextField* cp2X;
 	IBOutlet NSTextField* cp2Y;
+	IBOutlet NSTextField* constructor;
 }
 
 -(IBAction)updateTimingFunction:(id)sender;
