@@ -11,19 +11,19 @@
 
 @interface Tween_o_MaticAppDelegate : NSObject <NSApplicationDelegate, GridDelegate> {
     NSWindow *window;
-	Grid* grid;
-	NSArray* curveTypes;
-	CAMediaTimingFunction* timingFunction;
-	NSImageView* demoImage;
-	CGFloat demoAnimationStartX;
-	CGFloat demoAnimationEndX;
-	
-	IBOutlet NSPopUpButton* curveTypeDropDown;
-	IBOutlet NSTextField* cp1X;
-	IBOutlet NSTextField* cp1Y;
-	IBOutlet NSTextField* cp2X;
-	IBOutlet NSTextField* cp2Y;
-	IBOutlet NSTextField* constructor;
+    Grid* grid;
+    NSArray* curveTypes;
+    CAMediaTimingFunction* timingFunction;
+    NSImageView* demoImage;
+    CGFloat demoAnimationStartX;
+    CGFloat demoAnimationEndX;
+    
+    IBOutlet NSPopUpButton* curveTypeDropDown;
+    IBOutlet NSTextField* cp1X;
+    IBOutlet NSTextField* cp1Y;
+    IBOutlet NSTextField* cp2X;
+    IBOutlet NSTextField* cp2Y;
+    IBOutlet NSTextField* constructor;
 }
 
 -(IBAction)updateTimingFunction:(id)sender;

@@ -9,9 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface TimingFunction : NSObject {
-	NSString* function;
-	NSString* constantName;
-	NSString* description;
+    NSString* function;
+    NSString* constantName;
+    NSString* description;
 }
 
 -(id)initWithFunction:(NSString*)function constantName:(NSString*)constantName andDescription:(NSString*)description;

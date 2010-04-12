@@ -10,17 +10,17 @@
 #define DRAG_HANDLE_RADIUS 5.0
 
 enum draghandle {
-	CP_NONE,
-	CP_1,
-	CP_2
+    CP_NONE,
+    CP_1,
+    CP_2
 };
 
 @interface Grid : NSView {
-	float border;
-	NSPoint cp1;
-	NSPoint cp2;
-	unsigned int activeDragHandle;
-	id delegate;
+    float border;
+    NSPoint cp1;
+    NSPoint cp2;
+    unsigned int activeDragHandle;
+    id delegate;
 }
 
 @property (nonatomic) NSPoint cp1;
