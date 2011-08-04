@@ -9,15 +9,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface TimingFunction : NSObject {
-    NSString* function;
-    NSString* constantName;
-    NSString* description;
 }
 
 -(id)initWithFunction:(NSString*)function constantName:(NSString*)constantName andDescription:(NSString*)description;
 
-@property (retain, nonatomic) NSString* function;
-@property (retain, nonatomic) NSString* constantName;
-@property (retain, nonatomic) NSString* description;
+@property (copy, nonatomic) NSString* function;
+@property (copy, nonatomic) NSString* constantName;
+@property (copy, nonatomic) NSString* description;
 
 @end

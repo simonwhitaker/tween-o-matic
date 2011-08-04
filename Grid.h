@@ -6,7 +6,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "GridDelegate.h"
 #define DRAG_HANDLE_RADIUS 5.0
 
 enum draghandle {
@@ -15,16 +14,21 @@ enum draghandle {
     CP_2
 };
 
+@protocol GridDelegate;
+
 @interface Grid : NSView {
-    float border;
-    NSPoint cp1;
-    NSPoint cp2;
-    unsigned int activeDragHandle;
-    id delegate;
 }
 
+@property (nonatomic) CGFloat border;
+@property (nonatomic) NSUInteger activeDragHandle;
 @property (nonatomic) NSPoint cp1;
 @property (nonatomic) NSPoint cp2;
-@property (retain, nonatomic) id delegate;
+@property (nonatomic, assign) id<GridDelegate> delegate;
+
+@end
+
+@protocol GridDelegate <NSObject>
+
+-(void)controlPointWasDraggedAtIndex:(unsigned int)index;
 
 @end

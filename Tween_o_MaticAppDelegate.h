@@ -10,20 +10,6 @@
 #import "Grid.h"
 
 @interface Tween_o_MaticAppDelegate : NSObject <NSApplicationDelegate, GridDelegate> {
-    NSWindow *window;
-    Grid* grid;
-    NSArray* curveTypes;
-    CAMediaTimingFunction* timingFunction;
-    NSImageView* demoImage;
-    CGFloat demoAnimationStartX;
-    CGFloat demoAnimationEndX;
-    
-    IBOutlet NSPopUpButton* curveTypeDropDown;
-    IBOutlet NSTextField* cp1X;
-    IBOutlet NSTextField* cp1Y;
-    IBOutlet NSTextField* cp2X;
-    IBOutlet NSTextField* cp2Y;
-    IBOutlet NSTextField* constructor;
 }
 
 -(IBAction)updateTimingFunction:(id)sender;
@@ -32,8 +18,20 @@
 
 -(void)updateControlPointFromGridAtIndex:(unsigned int)index;
 
-@property (assign) IBOutlet Grid* grid;
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSImageView *demoImage;
+@property (nonatomic, retain) IBOutlet Grid* grid;
+@property (nonatomic, retain) IBOutlet NSWindow *window;
+@property (nonatomic, retain) IBOutlet NSImageView *demoImage;
+
+@property (nonatomic, copy) NSArray* curveTypes;
+@property (nonatomic, retain) CAMediaTimingFunction* timingFunction;
+@property (nonatomic) CGFloat demoAnimationStartX;
+@property (nonatomic) CGFloat demoAnimationEndX;
+
+@property (nonatomic, retain) IBOutlet NSPopUpButton* curveTypeDropDown;
+@property (nonatomic, retain) IBOutlet NSTextField* cp1X;
+@property (nonatomic, retain) IBOutlet NSTextField* cp1Y;
+@property (nonatomic, retain) IBOutlet NSTextField* cp2X;
+@property (nonatomic, retain) IBOutlet NSTextField* cp2Y;
+@property (nonatomic, retain) IBOutlet NSTextField* constructor;
 
 @end

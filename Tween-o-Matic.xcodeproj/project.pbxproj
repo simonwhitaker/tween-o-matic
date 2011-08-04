@@ -36,7 +36,6 @@
 		F436C62E1162AE99002BD9A0 /* TimingFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingFunction.h; sourceTree = "<group>"; };
 		F436C62F1162AE99002BD9A0 /* TimingFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingFunction.m; sourceTree = "<group>"; };
 		F4394A1311608A1F00930F4D /* lorry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lorry.png; sourceTree = "<group>"; };
-		F450D2E3115D403E0033A32E /* GridDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridDelegate.h; sourceTree = "<group>"; };
 		F450D34B115D4B8E0033A32E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F457AE75116130FC00CB5E72 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		F4795C56115BFBCD008CB8CC /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
@@ -62,7 +61,6 @@
 			children = (
 				F4795C56115BFBCD008CB8CC /* Grid.h */,
 				F4795C57115BFBCD008CB8CC /* Grid.m */,
-				F450D2E3115D403E0033A32E /* GridDelegate.h */,
 				256AC3D80F4B6AC300CF3369 /* Tween_o_MaticAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* Tween_o_MaticAppDelegate.m */,
 				F436C62E1162AE99002BD9A0 /* TimingFunction.h */,

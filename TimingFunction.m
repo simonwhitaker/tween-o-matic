@@ -10,24 +10,25 @@
 
 @implementation TimingFunction
 
-@synthesize constantName;
-@synthesize function;
-@synthesize description;
+@synthesize constantName=_constantName;
+@synthesize function=_function;
+@synthesize description=_description;
 
--(id)initWithFunction:(NSString*)fn constantName:(NSString*)cn andDescription:(NSString*)desc {
-    self = [super init];
-    if (self) {
-        constantName = [cn retain];
-        function     = [fn retain];
-        description  = [desc retain];
+-(id)initWithFunction:(NSString*)function 
+         constantName:(NSString*)constantName 
+       andDescription:(NSString*)description {
+    if ((self = [super init])) {
+        self.constantName = constantName;
+        self.function = function;
+        self.description = description;
     }
     return self;
 }
 
 -(void)dealloc {
-    [constantName release];
-    [function release];
-    [description release];
+    self.constantName = nil;
+    self.function = nil;
+    self.description = nil;
     [super dealloc];
 }
 

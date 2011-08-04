@@ -10,21 +10,24 @@
 
 @implementation Grid
 
-@synthesize delegate;
+@synthesize border=_border;
+@synthesize activeDragHandle=_activeDragHandle;
+@synthesize delegate=_delegate;
+@synthesize cp1=_cp1;
+@synthesize cp2=_cp2;
 
 #pragma mark -
 #pragma mark Initialisation stuff
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        border = 20.0;
-        activeDragHandle = CP_NONE;
+        _border = 20.0;
+        _activeDragHandle = CP_NONE;
     }
     return self;
 }
 
 -(void)awakeFromNib {
-    //[[self window] setAcceptsMouseMovedEvents:YES];   
 }
 
 #pragma mark -
@@ -33,8 +36,8 @@
 // grid to a point with coordinates in the range [0,1]
 -(NSPoint)normalisePoint:(NSPoint)point {
     NSPoint result = NSMakePoint(
-        (point.x - border) / ([self frame].size.width - border * 2),
-        (point.y - border) / ([self frame].size.height - border * 2)
+        (point.x - self.border) / (self.frame.size.width - self.border * 2),
+        (point.y - self.border) / (self.frame.size.height - self.border * 2)
     );
     return result;
 }
@@ -43,8 +46,8 @@
 // a point with coordinates in the range of the actual grid
 -(NSPoint)denormalisePoint:(NSPoint)point {
     NSPoint result = NSMakePoint(
-        ([self frame].size.width - border * 2) * point.x + border,
-        ([self frame].size.height - border * 2) * point.y + border
+        (self.frame.size.width - self.border * 2) * point.x + self.border,
+        (self.frame.size.height - self.border * 2) * point.y + self.border
     );
     return result;
 }
@@ -59,20 +62,20 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
 #pragma mark -
 #pragma mark Control Point accessors
 -(NSPoint)cp1 {
-    return [self normalisePoint:cp1];
+    return [self normalisePoint:_cp1];
 }
 
 -(void)setCp1:(NSPoint)point {
-    cp1 = [self denormalisePoint:point];
+    _cp1 = [self denormalisePoint:point];
     [self setNeedsDisplay:YES];
 }
 
 -(NSPoint)cp2 {
-    return [self normalisePoint:cp2];
+    return [self normalisePoint:_cp2];
 }
 
 -(void)setCp2:(NSPoint)point {
-    cp2 = [self denormalisePoint:point];
+    _cp2 = [self denormalisePoint:point];
     [self setNeedsDisplay:YES];
 }
 
@@ -92,19 +95,21 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
     
     NSRect rect = [self frame];
         
-    float w = rect.size.width - border * 2;
-    float h = rect.size.height - border * 2;
+    float w = rect.size.width - self.border * 2;
+    float h = rect.size.height - self.border * 2;
     
-    NSPoint origin = NSMakePoint(border, border);
-    NSPoint dest   = NSMakePoint(w + border - 1, h + border - 1);
+    NSPoint origin = NSMakePoint(self.border, self.border);
+    NSPoint dest   = NSMakePoint(w + self.border - 1, h + self.border - 1);
     
     // draw the grid
     [[NSColor grayColor] set];
     for (int i = 0; i <= 10; i++) {
-        float x = w / 10 * i + border;
-        float y = h / 10 * i + border;
-        [NSBezierPath strokeLineFromPoint:NSMakePoint(border, y) toPoint:NSMakePoint(border + w - 1, y)];
-        [NSBezierPath strokeLineFromPoint:NSMakePoint(x, border) toPoint:NSMakePoint(x, border + h - 1)];
+        float x = w / 10 * i + self.border;
+        float y = h / 10 * i + self.border;
+        [NSBezierPath strokeLineFromPoint:NSMakePoint(self.border, y) 
+                                  toPoint:NSMakePoint(self.border + w - 1, y)];
+        [NSBezierPath strokeLineFromPoint:NSMakePoint(x, self.border) 
+                                  toPoint:NSMakePoint(x, self.border + h - 1)];
     }
     
     // draw the curve
@@ -112,19 +117,19 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
     NSBezierPath* line = [NSBezierPath bezierPath];
     [line moveToPoint:origin];
     [line curveToPoint:dest
-         controlPoint1:cp1
-         controlPoint2:cp2];
+         controlPoint1:_cp1
+         controlPoint2:_cp2];
     [line stroke];
     
     // draw control point 1
     [[NSColor redColor] set];
     line = [NSBezierPath bezierPath];
     [line moveToPoint:origin];
-    [line lineToPoint:cp1];
+    [line lineToPoint:_cp1];
     [line stroke];
     
     line = [NSBezierPath bezierPath];
-    [line appendBezierPathWithArcWithCenter:cp1
+    [line appendBezierPathWithArcWithCenter:_cp1
                                      radius:DRAG_HANDLE_RADIUS
                                  startAngle:0
                                    endAngle:360];
@@ -137,11 +142,11 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
     [[NSColor blueColor] set];
     line = [NSBezierPath bezierPath];
     [line moveToPoint:dest];
-    [line lineToPoint:cp2];
+    [line lineToPoint:_cp2];
     [line stroke];
     
     line = [NSBezierPath bezierPath];
-    [line appendBezierPathWithArcWithCenter:cp2
+    [line appendBezierPathWithArcWithCenter:_cp2
                                      radius:DRAG_HANDLE_RADIUS
                                  startAngle:0
                                    endAngle:360];
@@ -160,14 +165,14 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
     NSPoint location = [self convertPoint:[event locationInWindow]
                                     fromView:nil];
 
-    if (distanceBetweenPoints(location, cp2) < DRAG_HANDLE_RADIUS * 2) {
-        activeDragHandle = CP_2;
+    if (distanceBetweenPoints(location, _cp2) < DRAG_HANDLE_RADIUS * 2) {
+        self.activeDragHandle = CP_2;
         [[NSCursor closedHandCursor] push];
-    } else if (distanceBetweenPoints(location, cp1) < DRAG_HANDLE_RADIUS * 2) {
-        activeDragHandle = CP_1;
+    } else if (distanceBetweenPoints(location, _cp1) < DRAG_HANDLE_RADIUS * 2) {
+        self.activeDragHandle = CP_1;
         [[NSCursor closedHandCursor] push];
     } else {
-        activeDragHandle = CP_NONE;
+        self.activeDragHandle = CP_NONE;
     }
 }
 
@@ -181,7 +186,7 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
     NSPoint location = [self convertPoint:[event locationInWindow]
                                  fromView:nil];
     
-    if (distanceBetweenPoints(location, cp1) < DRAG_HANDLE_RADIUS * 2 || distanceBetweenPoints(location, cp2) < DRAG_HANDLE_RADIUS * 2) {
+    if (distanceBetweenPoints(location, _cp1) < DRAG_HANDLE_RADIUS * 2 || distanceBetweenPoints(location, _cp2) < DRAG_HANDLE_RADIUS * 2) {
         [[NSCursor openHandCursor] set];
     } else {
         //[[NSCursor arrowCursor] set];
@@ -189,30 +194,30 @@ float distanceBetweenPoints(NSPoint a, NSPoint b) {
 }
 
 -(void)mouseDragged:(NSEvent*)event {
-    if (activeDragHandle > CP_NONE) {
+    if (self.activeDragHandle > CP_NONE) {
         //[[NSCursor closedHandCursor] set];
         NSPoint location = [self convertPoint:[event locationInWindow]
                                      fromView:nil];
         
-        if (location.x < border) 
-            location.x = border;
-        else if (location.x > [self frame].size.width - border - 1)
-            location.x = [self frame].size.width - border - 1;
+        if (location.x < self.border) 
+            location.x = self.border;
+        else if (location.x > [self frame].size.width - self.border - 1)
+            location.x = [self frame].size.width - self.border - 1;
         
-        if (location.y < border) 
-            location.y = border;
-        else if (location.y > [self frame].size.height - border - 1)
-            location.y = [self frame].size.height - border - 1;
+        if (location.y < self.border) 
+            location.y = self.border;
+        else if (location.y > [self frame].size.height - self.border - 1)
+            location.y = [self frame].size.height - self.border - 1;
         
-        if (activeDragHandle == CP_1) {
-            cp1 = location;
+        if (self.activeDragHandle == CP_1) {
+            _cp1 = location;
         }
         else {
-            cp2 = location;
+            _cp2 = location;
         }
         
-        if (delegate && [delegate respondsToSelector:@selector(controlPointWasDraggedAtIndex:)])
-            [delegate controlPointWasDraggedAtIndex:activeDragHandle];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(controlPointWasDraggedAtIndex:)])
+            [self.delegate controlPointWasDraggedAtIndex:self.activeDragHandle];
 
         [self setNeedsDisplay:YES];
     }
