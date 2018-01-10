@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Grid.h"
 
-@interface Tween_o_MaticAppDelegate : NSObject <NSApplicationDelegate, GridDelegate> {
+@interface Tween_o_MaticAppDelegate : NSObject <NSApplicationDelegate, GridDelegate, CAAnimationDelegate> {
 }
 
 -(IBAction)updateTimingFunction:(id)sender;
