@@ -116,7 +116,7 @@
 }
 
 -(IBAction)updateTimingFunction:(id)sender {
-    int curveTypeIndex = [self.curveTypeDropDown indexOfSelectedItem];
+    NSInteger curveTypeIndex = [self.curveTypeDropDown indexOfSelectedItem];
     if (curveTypeIndex <= 4) {
         TimingFunction* tf = (TimingFunction*)[self.curveTypes objectAtIndex:curveTypeIndex];
 
@@ -151,13 +151,13 @@
     [self updateTimingFunction:nil];
 }
 
--(void)controlPointWasDraggedAtIndex:(unsigned int)index {
+-(void)controlPointWasDraggedAtIndex:(NSUInteger)index {
     [self.curveTypeDropDown selectItemAtIndex:5]; // set drop-down to "custom"
     [self updateControlPointFromGridAtIndex:index];
     [self updateTimingFunction:nil];
 }
     
--(void)updateControlPointFromGridAtIndex:(unsigned int)index {
+-(void)updateControlPointFromGridAtIndex:(NSUInteger)index {
     if (index == CP_1) {
         [self.cp1X setFloatValue:self.grid.cp1.x];
         [self.cp1Y setFloatValue:self.grid.cp1.y];

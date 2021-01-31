@@ -29,6 +29,6 @@ enum draghandle {
 
 @protocol GridDelegate <NSObject>
 
--(void)controlPointWasDraggedAtIndex:(unsigned int)index;
+-(void)controlPointWasDraggedAtIndex:(NSUInteger)index;
 
 @end

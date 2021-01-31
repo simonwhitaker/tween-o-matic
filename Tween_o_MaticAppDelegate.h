@@ -16,7 +16,7 @@
 -(IBAction)updateControlPoints:(id)sender;
 -(IBAction)doAnimationDemo:(id)sender;
 
--(void)updateControlPointFromGridAtIndex:(unsigned int)index;
+-(void)updateControlPointFromGridAtIndex:(NSUInteger)index;
 
 @property (nonatomic, retain) IBOutlet Grid* grid;
 @property (nonatomic, retain) IBOutlet NSWindow *window;
